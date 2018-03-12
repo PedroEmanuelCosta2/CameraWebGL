@@ -1,8 +1,8 @@
-class Matrice {
+class Matrix {
 
-	constructor(taille){
+	constructor(size){
 
-		switch(taille){
+		switch(size){
 			case 2:
 				this.module = mat2;
 				break;
@@ -13,7 +13,7 @@ class Matrice {
 				this.module = mat4;
 				break;
 			default:
-				console.log("Déclarez une taille correcte de matrice.")
+				console.log("Declare a correct matrix's size.")
 				break;
 		}
 		this.matrix = this.module.create();
@@ -35,4 +35,16 @@ class Matrice {
 	rotateY(matrixToRotate, angleToRotate){
 		return this.module.rotateY(this.matrix, matrixToRotate.matrix, angleToRotate);
 	}
+
+	perspective(radianAngle, viewPortRatio, nearBound, farBound){
+	    this.module.perspective(this.matrix, radianAngle, viewPortRatio, nearBound, farBound);
+    }
+
+    lookAt(eye, center, up){
+	    this.module.lookAt(this.matrix, eye, center,up);
+    }
+
+    inverse(matrixToInvert){
+	    this.module.invert(this.matrix, matrixToInvert.matrix);
+    }
 }

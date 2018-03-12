@@ -46,16 +46,12 @@ function drawScene()
 	glContext.clear(glContext.COLOR_BUFFER_BIT | glContext.DEPTH_BUFFER_BIT);
 	glContext.viewport(0, 0, c_width, c_height);
 
-	let a = 0.03 * Math.cos(rotationAroundZ);
-    let b = 0.03 * Math.sin(rotationAroundZ);
+	let a = 0.1 * Math.cos(rotationAroundZ);
+    let b = 0.1 * Math.sin(rotationAroundZ);
 
-	if (perspective){
-		camera.rotate(vec3.fromValues(a,b,-2));
-		camera.rotateY(camera.mvMatrix,Math.PI);
-	}else{
-		camera.rotate(vec3.fromValues(a,b,0));
-	}
-
+    camera.perspective(degToRad(60), c_width/c_height, 0.1, 10000);
+    camera.rotateY(camera.mvMatrix,Math.PI);
+    camera.rotate(vec3.fromValues(a,b,-1));
     camera.uniform();
 
 	for(let i= 0;i<sceneObjects.length;i++)
@@ -71,7 +67,25 @@ function initWebGL()
 
 	camera = new Camera();
 
+    camera.translateCamera(0,0,1.5);
+
 	initProgram();
 
 	initScene();
 }
+
+function updatePosition() {
+    let x = document.getElementById("x_range").value;
+    let y = document.getElementById("y_range").value;
+    let z = document.getElementById("z_range").value;
+
+    camera.translateCamera(x,y,z);
+}
+
+// $("#x_range").mousemove(function () {
+//     let x = document.getElementById("x_range").value;
+//     let y = document.getElementById("y_range").value;
+//     let z = document.getElementById("z_range").value;
+//
+//     camera.translateCamera(x,y,z);
+// });

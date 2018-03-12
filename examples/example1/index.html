@@ -5,6 +5,7 @@
 		<!-- import of webgl utilities -->
         <script src="../../libs/gl-matrix-min.js"></script>
         <script src="../../libs/webglTools.js"></script>
+        <script src="../../libs/jquery-3.2.1.min.js"></script>
 
 		<!-- import application scripts -->
 		<script src="./scene.js"></script>
@@ -53,7 +54,21 @@
 		  HTML5 is not supported
 		</canvas>
 		
-		<!-- render mode button -->
-		<button id="switchPerpsective" onclick="perspectiveChange()">Perspective/Non-Perspective</button>
+		<!-- camera's positions sliders -->
+        <ul>
+            <li>
+                x : <input type="range" min="-10" max="10" value="0" class="slider" id="x_range"
+                           onchange="updatePosition()">
+            </li>
+            <li>
+                y : <input type="range" min="-10" max="10" value="0" class="slider" id="y_range"
+                           onchange="updatePosition()">
+            </li>
+            <li>
+                z : <input type="range" min="-10" max="10" value="1" class="slider" id="z_range"
+                           onchange="updatePosition()">
+            </li>
+        </ul>
+
     </body>
 </html>
