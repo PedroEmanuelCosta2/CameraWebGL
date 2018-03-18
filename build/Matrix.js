@@ -41,7 +41,15 @@ class Matrix {
     }
 
     lookAt(eye, center, up){
-	    this.module.lookAt(this.matrix, eye, center,up);
+	    this.module.lookAt(this.matrix, eye, center, up);
+    }
+
+    frustum(left, right, bottom, top, near, far){
+	    this.module.frustum(this.matrix, left, right, bottom, top, near, far);
+    }
+
+    ortho(left, right, bottom, top, near, far){
+	    this.module.ortho(this.matrix, left, right, bottom, top, near, far);
     }
 
     inverse(matrixToInvert){
