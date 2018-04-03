@@ -3,6 +3,7 @@ let sceneObjects = [];
 var glContext;
 let camera;
 let vecPosCamera = vec3.create();
+let vecFocusCamera = vec3.create();
 
 function initShaderParameters(prg)
 {
@@ -49,25 +50,28 @@ function initWebGL()
 
     camera.setPositionOfCamera(0,0,8);
     camera.perspective(degToRad(60), c_width/c_height, 0.1, 10000);
-    // camera.setOrtho(-10,10,-10,10,0.1,1000);
+    // camera.ortho(-10,10,-10,10,0.1,1000);
 
 	initProgram();
 	initScene();
 }
 
-function focusOnTriangle1(){
+function focusOnCube1(){
     camera.setTargetOfCameraSmooth(-6,4,-6,100);
     vec3.set(vecPosCamera,-6, 5, -2);
+    vec3.set(vecFocusCamera, 0, 1, 0);
 }
 
-function focusOnTriangle2(){
+function focusOnCube2(){
     camera.setTargetOfCameraSmooth(4,4,-9,100);
     vec3.set(vecPosCamera,4, 5, -5);
+    vec3.set(vecFocusCamera, 4, 4, -9);
 }
 
-function focusOnTriangle3(){
+function focusOnCube3(){
     camera.setTargetOfCameraSmooth(7,2,-4,100);
     vec3.set(vecPosCamera,7, 3, 0);
+    vec3.set(vecFocusCamera, 7, 2, -4);
 }
 
 function setPositionSmooth() {

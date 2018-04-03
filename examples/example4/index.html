@@ -9,7 +9,7 @@
 
 		<!-- import application scripts -->
 		<script src="./scene.js"></script>
-		<script src="./triangle.js"></script>
+		<script src="cube.js"></script>
 		<script src="../../module/Camera.js"></script>
 		<script src="../../module/Matrix.js"></script>
 		
@@ -43,35 +43,22 @@
 	<!-- initialize webgl onload -->
     <body onload="initWebGL()">
 		<script>
-			displayTitle("Exemple 1", 1,1,1,1,1,1,1);
+			displayTitle("Exemple 4", 1,1,1,1,1,1,1);
 		</script>
 		<br>
-			Exemple 1
+			Exemple 4
 		<br>
 		
 		<!-- webgl canvas -->
 		<canvas id="webgl-canvas" width="500" height="500">
 		  HTML5 is not supported
 		</canvas>
-		
-		<!-- camera's positions sliders -->
-        <ul>
-            <li>
-                x : <input type="range" min="-10" max="10" value="0" class="slider" id="x_range"
-                           onmousemove="updatePosition()">
-            </li>
-            <li>
-                y : <input type="range" min="-10" max="10" value="0" class="slider" id="y_range"
-                           onmousemove="updatePosition()">
-            </li>
-            <li>
-                z : <input type="range" min="-10" max="10" value="1" class="slider" id="z_range"
-                           onmousemove="updatePosition()">
-            </li>
-            <li>
-                <input type="button" id="changeCamera" value="Change Camera" onclick="changeCamera();">
-            </li>
-        </ul>
+
+        <!--Button to focus on triangles-->
+        <div>
+            <input type="button" id="rotateAroundCube" value="Rotate 360° around the focused Cube"
+                   onclick="rotateAroundCube();">
+        </div>
 
     </body>
 </html>

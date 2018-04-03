@@ -2,12 +2,19 @@ let sceneObjects = [];
 
 var glContext;
 let camera;
+let camera2;
+let cameraNow;
+let cameraChange = false;
 
 let rotationAroundZ = 0;
 
 function rotateOnYEverySecond() {
     rotationAroundZ += 0.1;
     setTimeout(rotateOnYEverySecond, 16)
+}
+
+function changeCamera(){
+    cameraChange = !cameraChange;
 }
 
 function initShaderParameters(prg)
@@ -41,14 +48,22 @@ function drawScene()
 	glContext.clear(glContext.COLOR_BUFFER_BIT | glContext.DEPTH_BUFFER_BIT);
 	glContext.viewport(0, 0, c_width, c_height);
 
+
+    if (cameraChange){
+        cameraNow = camera2;
+    } else {
+        cameraNow = camera;
+    }
+
+    setPositionValue();
+
 	for(let i= 0;i<sceneObjects.length;i++)
 	{
-		sceneObjects[i].draw(camera);
+		sceneObjects[i].draw(cameraNow);
 	}
 
-    camera.update();
+    cameraNow.update();
 }
-
 
 function initWebGL()
 {
@@ -58,11 +73,21 @@ function initWebGL()
 
     camera.setPositionOfCamera(0,0,1);
     camera.perspective(degToRad(60), c_width/c_height, 0.1, 10000);
-    // camera.setOrtho(-3,3,-3,3,0.1,100);
+
+    camera2 = new Camera();
+
+    camera2.setPositionOfCamera(6,0,-3);
+    camera2.ortho(-3,3,-3,3,0.1,100);
 
 	initProgram();
 
 	initScene();
+}
+
+function setPositionValue(){
+    document.getElementById("x_range").value = cameraNow.position[0];
+    document.getElementById("y_range").value = cameraNow.position[1];
+    document.getElementById("z_range").value = cameraNow.position[2];
 }
 
 function updatePosition() {
@@ -70,5 +95,5 @@ function updatePosition() {
     let y = document.getElementById("y_range").value;
     let z = document.getElementById("z_range").value;
 
-    camera.setPositionOfCamera(x,y,z);
+    cameraNow.setPositionOfCamera(x,y,z);
 }

@@ -13,6 +13,14 @@ class Camera {
 		this.pMatrix.perspective(radianAngle, viewPortRatio, nearBound, farBound);
     }
 
+    ortho(left, right, bottom, top, near, far){
+        this.pMatrix.ortho(left, right, bottom, top, near, far);
+    }
+
+    setFrustum(left, right, bottom, top, near, far){
+        this.pMatrix.frustum(left, right, bottom, top, near, far);
+    }
+
 	multMvMatrix(mvMatrix){
 	    let tmpMatrix = mat4.create();
 	    mat4.identity(tmpMatrix);
@@ -92,7 +100,7 @@ class Camera {
         let vecDestination;
 
         if (typeof x === "object"){
-            dx = parseFloat(vec3.distance(x, this.position) / dt);
+            dx = vec3.distance(x, this.position) / dt;
             console.log(dt);
             vecDestination = x;
             y = x[1];
@@ -130,19 +138,44 @@ class Camera {
         }, 16);
     }
 
-    rotationAroundSmooth(center, radius, ){
+    rotationAroundSmooth(point, radius, angle, dt){
+        function x (teta){
+            return point[0] + radius * Math.cos(teta);
+        }
 
+        function z (teta){
+            return point[1] + radius * Math.sin(teta);
+        }
+
+        function y (teta){
+            return 3 * Math.sin(teta);
+        }
+
+        this.applyGeometricalFunctionsSmooth(x, y, z, angle, dt);
+    }
+
+    applyGeometricalFunctionsSmooth(x,y,z,value,dt){
+	    let dx = value / dt;
+	    let tmp = 0;
+
+	    let self = this;
+
+	    let geometricalAnim = setInterval(function () {
+            tmp += dx;
+            if (typeof x === 'function')
+                self.position[0] = x(tmp);
+            if (typeof y === 'function')
+                self.position[1] = y(tmp);
+            if (typeof z === 'function')
+                self.position[2] = z(tmp);
+
+            if (tmp >= value){
+                clearInterval(geometricalAnim);
+            }
+        }, 16);
     }
 
     update(){
         this.mvMatrix.lookAt(this.position, this.cameraTarget, this.up);
-    }
-
-    setFrustum(left, right, bottom, top, near, far){
-	    this.pMatrix.frustum(left, right, bottom, top, near, far);
-    }
-
-    setOrtho(left, right, bottom, top, near, far){
-	    this.pMatrix.ortho(left, right, bottom, top, near, far);
     }
 }
