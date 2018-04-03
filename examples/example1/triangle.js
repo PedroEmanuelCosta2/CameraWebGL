@@ -12,6 +12,10 @@ class Triangle
 		this.indices = [];
 		this.vertices = [];
 		this.colors = [];
+		this.mvMatrix = mat4.create();
+		this.pMatrix = mat4.create();
+
+		mat4.identity(this.mvMatrix);
 
 		this.init();
 	}
@@ -33,7 +37,23 @@ class Triangle
 		this.indexBuffer  = getIndexBufferWithIndices(this.indices);
 	}
 
-	draw(){
+	rotate(){
+        let a = 0.1 * Math.cos(rotationAroundZ);
+        let b = 0.1 * Math.sin(rotationAroundZ);
+
+        this.mvMatrix = mat4.rotateY(this.mvMatrix, this.mvMatrix, Math.PI);
+
+        let translationMat = mat4.create();
+        mat4.identity(translationMat);
+
+        mat4.translate(translationMat, translationMat, vec3.fromValues(a,b,-1));
+        mat4.multiply(this.mvMatrix, translationMat, this.mvMatrix);
+    }
+
+	draw(camera){
+	    mat4.identity(this.mvMatrix);
+	    mat4.identity(this.pMatrix);
+
 		glContext.bindBuffer(glContext.ARRAY_BUFFER, this.vertexBuffer);
 		glContext.vertexAttribPointer(prg.vertexPositionAttribute, 3, glContext.FLOAT, false, 0, 0);
 
@@ -41,6 +61,14 @@ class Triangle
 		glContext.vertexAttribPointer(prg.colorAttribute, 4, glContext.FLOAT, false, 0, 0);
 
 		glContext.bindBuffer(glContext.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
+
+		this.rotate();
+
+        let mvMatrix = camera.multMvMatrix(this.mvMatrix);
+        let pMatrix = camera.multPMatrix(this.pMatrix);
+
+        glContext.uniformMatrix4fv(prg.mvMatrixUniform, false, mvMatrix);
+        glContext.uniformMatrix4fv(prg.pMatrixUniform, false, pMatrix);
 
 		glContext.drawElements(glContext.TRIANGLES, this.indices.length, glContext.UNSIGNED_SHORT,0);
 	}

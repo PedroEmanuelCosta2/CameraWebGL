@@ -18,9 +18,9 @@ function initShaderParameters(prg)
 
 function initScene()
 {
-	sceneObjects.push(new Triangle([[-6,0,-6],[-3,0,-6],[-4.5,3,-6]], {r:0.14,g:0.29,b:0.80}));
-	sceneObjects.push(new Triangle([[4,0,-9],[7,0,-9],[5.5,3,-9]], {r:0.14,g:0.39,b:0.90}));
-	sceneObjects.push(new Triangle([[7,4,-4],[10,4,-4],[8.5,7,-4]], {r:0.14,g:0.49,b:1.0}));
+	sceneObjects.push(new Cube([-6,4,-6], {r:0.14,g:0.29,b:0.80}));
+	sceneObjects.push(new Cube([4,4,-9], {r:0.14,g:0.39,b:0.90}));
+	sceneObjects.push(new Cube([7,2,-4], {r:0.14,g:0.49,b:1.0}));
 
 	renderLoop();
 }
@@ -32,12 +32,12 @@ function drawScene()
 	glContext.clear(glContext.COLOR_BUFFER_BIT | glContext.DEPTH_BUFFER_BIT);
 	glContext.viewport(0, 0, c_width, c_height);
 
-	camera.update();
-
 	for(let i= 0;i<sceneObjects.length;i++)
 	{
 		sceneObjects[i].draw(camera);
 	}
+
+    camera.update();
 }
 
 
@@ -56,18 +56,18 @@ function initWebGL()
 }
 
 function focusOnTriangle1(){
-    camera.setTargetOfCameraSmooth(-5.5,1.5,-6,100);
-    vec3.set(vecPosCamera,-5.5, 0, -2);
+    camera.setTargetOfCameraSmooth(-6,4,-6,100);
+    vec3.set(vecPosCamera,-6, 5, -2);
 }
 
 function focusOnTriangle2(){
-    camera.setTargetOfCameraSmooth(5.5,1.5,-9,100);
-    vec3.set(vecPosCamera,5.5, 0, -5);
+    camera.setTargetOfCameraSmooth(4,4,-9,100);
+    vec3.set(vecPosCamera,4, 5, -5);
 }
 
 function focusOnTriangle3(){
-    camera.setTargetOfCameraSmooth(8.5,8.5,-4,100);
-    vec3.set(vecPosCamera,8.5, 4, 0);
+    camera.setTargetOfCameraSmooth(7,2,-4,100);
+    vec3.set(vecPosCamera,7, 3, 0);
 }
 
 function setPositionSmooth() {

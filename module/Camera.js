@@ -6,36 +6,26 @@ class Camera {
 
 		this.up = vec3.fromValues(0,1,0);
 		this.position = vec3.create();
-        this.cameraTarget = vec3.fromValues(0,0,0);
+        this.cameraTarget = vec3.create();
 	}
-
-	uniform(){
-	    this.uniformPMatrix();
-        this.uniformMvMatrix();
-        this.update();
-	}
-
-    uniformPMatrix(){
-        glContext.uniformMatrix4fv(prg.pMatrixUniform, false, this.pMatrix.matrix);
-    }
-
-    uniformMvMatrix(){
-        glContext.uniformMatrix4fv(prg.mvMatrixUniform, false, this.mvMatrix.matrix);
-    }
 
     perspective(radianAngle, viewPortRatio, nearBound, farBound){
 		this.pMatrix.perspective(radianAngle, viewPortRatio, nearBound, farBound);
     }
 
-	rotate(vectorToTranslateBy){
-		let translationMat = new Matrix(4);
-		translationMat.translate(translationMat, vectorToTranslateBy);
-		this.mvMatrix.multiply(translationMat, this.mvMatrix);
-	}
+	multMvMatrix(mvMatrix){
+	    let tmpMatrix = mat4.create();
+	    mat4.identity(tmpMatrix);
+	    mat4.multiply(tmpMatrix, this.mvMatrix.matrix, mvMatrix);
+	    return tmpMatrix;
+    }
 
-	rotateY(matrixToRotate, angleToRotate){
-		this.mvMatrix.matrix = this.mvMatrix.rotateY(matrixToRotate, angleToRotate);
-	}
+    multPMatrix(pMatrix){
+        let tmpMatrix = mat4.create();
+        mat4.identity(tmpMatrix);
+        mat4.multiply(tmpMatrix, this.pMatrix.matrix, pMatrix);
+        return tmpMatrix;
+    }
 
 	setPositionOfCamera(x,y,z){
 	    if (typeof x === "object"){
@@ -99,11 +89,18 @@ class Camera {
 
     setPositionOfCameraSmooth(x,y,z,dt){
         let dx = 0;
+        let vecDestination;
 
         if (typeof x === "object"){
-            dx = vec3.distance(x, this.position) / dt;
+            dx = parseFloat(vec3.distance(x, this.position) / dt);
+            console.log(dt);
+            vecDestination = x;
+            y = x[1];
+            z = x[2];
+            x = x[0];
         }else{
             dx = vec3.distance(vec3.fromValues(x,y,z), this.position) / dt;
+            vecDestination = vec3.fromValues(x,y,z);
         }
 
         let self = this;
@@ -126,11 +123,15 @@ class Camera {
 
             self.setPositionOfCamera(self.position);
 
-            if (vec3.distance(vec3.fromValues(x,y,z), self.position) < 0.5){
+            if (vec3.distance(vecDestination, self.position) < 0.1){
                 clearInterval(positionAnim);
             }
 
         }, 16);
+    }
+
+    rotationAroundSmooth(center, radius, ){
+
     }
 
     update(){

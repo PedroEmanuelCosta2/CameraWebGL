@@ -41,18 +41,12 @@ function drawScene()
 	glContext.clear(glContext.COLOR_BUFFER_BIT | glContext.DEPTH_BUFFER_BIT);
 	glContext.viewport(0, 0, c_width, c_height);
 
-	let a = 0.1 * Math.cos(rotationAroundZ);
-    let b = 0.1 * Math.sin(rotationAroundZ);
-
-    camera.rotateY(camera.mvMatrix,Math.PI);
-    camera.rotate(vec3.fromValues(a,b,-1));
-
-    camera.uniform();
-
 	for(let i= 0;i<sceneObjects.length;i++)
 	{
-		sceneObjects[i].draw();
+		sceneObjects[i].draw(camera);
 	}
+
+    camera.update();
 }
 
 
@@ -64,7 +58,7 @@ function initWebGL()
 
     camera.setPositionOfCamera(0,0,1);
     camera.perspective(degToRad(60), c_width/c_height, 0.1, 10000);
-    // camera.setOrtho(-5,5,-5,5,0.1,100);
+    // camera.setOrtho(-3,3,-3,3,0.1,100);
 
 	initProgram();
 

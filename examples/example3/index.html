@@ -9,7 +9,7 @@
 
 		<!-- import application scripts -->
 		<script src="./scene.js"></script>
-		<script src="./triangle.js"></script>
+		<script src="cube.js"></script>
 		<script src="../../module/Camera.js"></script>
 		<script src="../../module/Matrix.js"></script>
 		
@@ -43,32 +43,26 @@
 	<!-- initialize webgl onload -->
     <body onload="initWebGL()">
 		<script>
-			displayTitle("Exemple 1", 1,1,1,1,1,1,1);
+			displayTitle("Exemple 3", 1,1,1,1,1,1,1);
 		</script>
 		<br>
-			Exemple 1
+			Exemple 3
 		<br>
 		
 		<!-- webgl canvas -->
 		<canvas id="webgl-canvas" width="500" height="500">
 		  HTML5 is not supported
 		</canvas>
-		
-		<!-- camera's positions sliders -->
-        <ul>
-            <li>
-                x : <input type="range" min="-10" max="10" value="0" class="slider" id="x_range"
-                           onmousemove="updatePosition()">
-            </li>
-            <li>
-                y : <input type="range" min="-10" max="10" value="0" class="slider" id="y_range"
-                           onmousemove="updatePosition()">
-            </li>
-            <li>
-                z : <input type="range" min="-10" max="10" value="1" class="slider" id="z_range"
-                           onmousemove="updatePosition()">
-            </li>
-        </ul>
+
+        <!--Button to focus on triangles-->
+        <div>
+            <input type="button" id="triangle1" value="Focus on Triangle 1" onclick="focusOnTriangle1();">
+            <input type="button" id="triangle2" value="Focus on Triangle 2" onclick="focusOnTriangle2();">
+            <input type="button" id="triangle3" value="Focus on Triangle 3" onclick="focusOnTriangle3();">
+        </div>
+        <div>
+            <input type="button" value="Change smooth position" onclick="setPositionSmooth();">
+        </div>
 
     </body>
 </html>
