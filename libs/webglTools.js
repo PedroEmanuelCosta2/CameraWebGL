@@ -188,7 +188,7 @@ function initTextureWithImage(sFilename, texturen) {
         glContext.generateMipmap(glContext.TEXTURE_2D);
 
         glContext.bindTexture(glContext.TEXTURE_2D, null);
-    }
+    };
 
     texturen[anz].image.src = sFilename;
 

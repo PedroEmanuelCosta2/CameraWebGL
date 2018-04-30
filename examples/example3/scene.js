@@ -50,30 +50,30 @@ function initWebGL()
 
     camera.setPositionOfCamera(0,0,8);
     camera.perspective(degToRad(60), c_width/c_height, 0.1, 10000);
-    // camera.ortho(-10,10,-10,10,0.1,1000);
+    // camera.orthogonal(-10,10,-10,10,0.1,1000);
 
 	initProgram();
 	initScene();
 }
 
 function focusOnCube1(){
-    camera.setTargetOfCameraSmooth(-6,4,-6,100);
+    camera.easeTargetOfCamera(-6,4,-6,100);
     vec3.set(vecPosCamera,-6, 5, -2);
     vec3.set(vecFocusCamera, 0, 1, 0);
 }
 
 function focusOnCube2(){
-    camera.setTargetOfCameraSmooth(4,4,-9,100);
+    camera.easeTargetOfCamera(4,4,-9,100);
     vec3.set(vecPosCamera,4, 5, -5);
     vec3.set(vecFocusCamera, 4, 4, -9);
 }
 
 function focusOnCube3(){
-    camera.setTargetOfCameraSmooth(7,2,-4,100);
+    camera.easeTargetOfCamera(7,2,-4,100);
     vec3.set(vecPosCamera,7, 3, 0);
     vec3.set(vecFocusCamera, 7, 2, -4);
 }
 
 function setPositionSmooth() {
-    camera.setPositionOfCameraSmooth(vecPosCamera[0],vecPosCamera[1], vecPosCamera[2], 100);
+    camera.easePositionOfCamera(vecPosCamera[0],vecPosCamera[1], vecPosCamera[2], 100);
 }

@@ -77,7 +77,7 @@ function initWebGL()
     camera2 = new Camera();
 
     camera2.setPositionOfCamera(6,0,-3);
-    camera2.ortho(-3,3,-3,3,0.1,100);
+    camera2.orthogonal(-3,3,-3,3,0.1,100);
 
 	initProgram();
 
@@ -88,6 +88,7 @@ function setPositionValue(){
     document.getElementById("x_range").value = cameraNow.position[0];
     document.getElementById("y_range").value = cameraNow.position[1];
     document.getElementById("z_range").value = cameraNow.position[2];
+
 }
 
 function updatePosition() {

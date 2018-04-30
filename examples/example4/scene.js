@@ -51,5 +51,5 @@ function initWebGL()
 }
 
 function rotateAroundCube() {
-    camera.rotationAroundSmooth(vec3.fromValues(0,0,0),8,degToRad(360),100);
+    camera.easeRotation(vec3.fromValues(0,0,0),8,degToRad(360),100);
 }

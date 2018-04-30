@@ -49,27 +49,27 @@ function initWebGL()
 
     camera.setPositionOfCamera(0,0,8);
     camera.perspective(degToRad(60), c_width/c_height, 0.1, 10000);
-    // camera.ortho(-10,10,-10,10,0.1,1000);
+    // camera.orthogonal(-10,10,-10,10,0.1,1000);
 
 	initProgram();
 	initScene();
 }
 
 function focusOnTriangle1(){
-    camera.setTargetOfCameraSmooth(-5.5,1.5,-6,100);
+    camera.easeTargetOfCamera(-5.5,1.5,-6,100);
     vec3.set(vecPosCamera,-5.5, 0, -2);
 }
 
 function focusOnTriangle2(){
-    camera.setTargetOfCameraSmooth(5.5,1.5,-9,100);
+    camera.easeTargetOfCamera(5.5,1.5,-9,100);
     vec3.set(vecPosCamera,5.5, 0, -5);
 }
 
 function focusOnTriangle3(){
-    camera.setTargetOfCameraSmooth(8.5,8.5,-4,100);
+    camera.easeTargetOfCamera(8.5,8.5,-4,100);
     vec3.set(vecPosCamera,8.5, 4, 0);
 }
 
 function setPositionSmooth() {
-    camera.setPositionOfCameraSmooth(vecPosCamera[0],vecPosCamera[1], vecPosCamera[2], 100);
+    camera.easePositionOfCamera(vecPosCamera[0],vecPosCamera[1], vecPosCamera[2], 100);
 }
